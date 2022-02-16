@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import Main from './views/Main';
+import OneProduct from './components/OneProduct';
+import UpdateProduct from './components/UpdateProduct';
+import { Router } from '@reach/router';
 import './App.css';
 
+
+
 function App() {
+
+
+  //Oddly, adding 'default' to my Main view, allows for that content to be viewed at localhost:3000 and localhost:3000/home. If I remove the default, then it automatically routes me to localhost:3000/home to start. This may be because I have no other routes setup. 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <Router>
+        <Main path='/home' />
+        <OneProduct path='/products/:id' />
+        <UpdateProduct path='/products/update/:id' />
+      </Router>
+
     </div>
   );
 }

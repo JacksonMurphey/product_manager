@@ -11,7 +11,7 @@ module.exports = {
                 })
                 .catch(err => {
                     console.log('Creating a New Product Failed')
-                    res.status(400).json({ message: 'Something went wrong in createProduct' })
+                    res.status(400).json({ message: 'Something went wrong in createProduct', error: err })
                 })
         },
 
