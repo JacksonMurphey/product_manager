@@ -6,7 +6,7 @@ const AllProducts = (props) => {
 
     // Below line was removed and updated since I lifted state
     // const [productList, setProductList] = useState([])
-    const { product, setProduct } = props;
+    const { product, setProduct, removeProduct } = props;
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/products')
@@ -18,21 +18,35 @@ const AllProducts = (props) => {
             .catch(err => console.log(err))
     }, [])
 
+
+    // Delete Product function
+    const deleteProduct = (productID) => {
+        axios.delete(`http://localhost:8000/api/products/${productID}`)
+            .then(res => removeProduct(productID))
+            .catch(err => console.log(err))
+    }
+
     return (
         <div>
             <hr />
             <h1 style={{ textDecoration: 'underline' }}>All Products</h1>
             {
                 product.map((product, index) => (
-                    <ul key={index}>
+                    <div key={index} >
+                        <div style={{ border: "1px solid blue", margin: "10px 300px", boxShadow: "1px 3px 3px", borderRadius: "10px" }}>
 
-                        <Link to={`/products/${product._id}`}>
-                            <li>{product.title}</li>
-                        </Link>
-                        {/* <li>Price: $ {product.price}</li>
+                            <Link to={`/products/${product._id}`}>
+                                {product.title}
+                            </Link>
+
+                            {/* <li>Price: $ {product.price}</li>
                         <li>Description: {product.description}</li>
                         <hr /> */}
-                    </ul>
+
+                            <Link to={`/products/update/${product._id}`}><button>Edit</button> </Link>
+                            <button style={{ color: "white", backgroundColor: "red" }} onClick={e => { deleteProduct(product._id) }}>Delete</button>
+                        </div>
+                    </div>
                 ))
             }
         </div>

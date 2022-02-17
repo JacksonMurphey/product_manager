@@ -11,7 +11,7 @@ const UpdateProduct = (props) => {
     const [title, setTitle] = useState()
     const [price, setPrice] = useState()
     const [description, setDescription] = useState()
-    // const [errors, setErrors] = useState('')
+    const [errors, setErrors] = useState('')
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/products/${id}`)
@@ -34,7 +34,7 @@ const UpdateProduct = (props) => {
             })
             .catch(err => {
                 console.log(err.response.data.error.errors)
-                // setErrors(err.response.data.error.errors)
+                setErrors(err.response.data.error.errors)
             })
     }
 
@@ -44,33 +44,34 @@ const UpdateProduct = (props) => {
                 <div>
                     <label >Product Name: </label>
                     <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
-                    {/* <>
-                        <input type="text" value={title} onChange={e => setTitle(e.target.value)} style={{ border: "1px solid red" }} />
+
+                    {errors.title &&
                         <p style={{ color: "red" }}>{errors.title.message}</p>
-                    </> */}
+                    }
+
 
                 </div>
                 <div>
                     <label >Product Price: </label>
                     <input type="text" value={price} onChange={e => setPrice(e.target.value)} />
-                    {/* <>
-                                <input type="text" value={price} onChange={e => setPrice(e.target.value)} style={{ border: "1px solid red" }} />
-                                <p style={{ color: "red" }}>{errors.price.message}</p>
-                            </> */}
+                    {errors.price &&
+                        <p style={{ color: "red" }}>{errors.price.message}</p>
+                    }
 
                 </div>
                 <div>
                     <label >Product Description: </label>
                     <textarea cols='20' rows='5' type="text" value={description} onChange={e => setDescription(e.target.value)} />
-                    {/* <>
-                                <textarea cols='20' rows='5' type="text" value={description} onChange={e => setDescription(e.target.value)} style={{ border: "1px solid red" }} />
-                                <p style={{ color: "red" }}>{errors.description.message}</p>
-                            </> */}
+                    {errors.description &&
+                        <p style={{ color: "red" }}>{errors.description.message}</p>
+                    }
 
                 </div>
                 <button type="submit">Update Product</button>
             </form>
         </div>
     )
+
+
 }
 export default UpdateProduct;
